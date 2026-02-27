@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -144,11 +145,17 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'Search Here.....',
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.grey.shade800,
-                                      fontSize: 16,
+                                  SizedBox(
+                                    width: size.width * 0.6,
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        hintText: 'Search Here....',
+                                        border: InputBorder.none,
+                                      ),
+                                      cursorColor: Colors.grey.shade800,
+                                      onChanged: (value) async {
+                                        await WeatherServices().getAutoComplete(value);
+                                      }
                                     ),
                                   ),
                                   Icon(

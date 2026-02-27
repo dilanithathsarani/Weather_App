@@ -15,11 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Weather App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: SplashScreen(),
     );
   }
 }
-
