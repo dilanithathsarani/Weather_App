@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:weather_app/models/current_weather.dart';
+import 'package:weather_app/services/weather_services.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final CurrentWeather currentWeather;
+  const HomePage({super.key, required this.currentWeather});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -44,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                'Kandy',
+                                widget.currentWeather.name,
                                 style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 25,
@@ -55,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    'Misty',
+                                    widget.currentWeather.condition.text,
                                     style: GoogleFonts.poppins(
                                       color: Colors.grey.shade300,
                                       fontSize: 16,
@@ -67,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                                       right: 2,
                                     ),
                                     child: Text(
-                                      '28°C',
+                                      '${widget.currentWeather.temp}°C',
                                       style: GoogleFonts.poppins(
                                         color: Colors.grey.shade300,
                                         fontSize: 16,
@@ -75,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   Image.network(
-                                    'https://cdn.weatherapi.com/weather/64x64/night/143.png',
+                                    widget.currentWeather.condition.icon,
                                     height: 25,
                                   ),
                                 ],
@@ -105,9 +108,16 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                  'https://www.perfocal.com/blog/content/images/size/w960/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg',
+                              InkWell(
+                                onTap: () {
+                                  WeatherServices().getCurrentWeather(
+                                    'Colombo',
+                                  );
+                                },
+                                child: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                    'https://www.perfocal.com/blog/content/images/size/w960/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg',
+                                  ),
                                 ),
                               ),
                             ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:weather_app/models/current_weather.dart';
 import 'package:weather_app/screens/home_page.dart';
+import 'package:weather_app/services/weather_services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,11 +15,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+    Future.delayed(Duration(seconds: 1), () async {
+      final currentWeather = await WeatherServices().getCurrentWeather(
+        'London',
       );
+      if (currentWeather != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(currentWeather: currentWeather),
+          ),
+        );
+      }
     });
   }
 
