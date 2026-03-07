@@ -7,7 +7,7 @@ import 'package:weather_app/screens/place_view.dart';
 import 'package:weather_app/services/weather_services.dart';
 
 class HomePage extends StatefulWidget {
-  final CurrentWeather currentWeather;
+  final WeatherStatus currentWeather;
   const HomePage({super.key, required this.currentWeather});
 
   @override
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      
+
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                           alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 30),
-        
+
                             child: Card(
                               color: Colors.white,
                               child: Container(
@@ -163,15 +163,13 @@ class _HomePageState extends State<HomePage> {
                                         cursorColor: Colors.grey.shade800,
                                         onChanged: (value) async {
                                           if (value.isNotEmpty) {
-                                              predictions =
-                                                  await WeatherServices()
-                                                      .getAutoComplete(value);
-                                            } else {
-                                              predictions.clear();
-                                            }
-                                          setState(() {
-                                            
-                                          });
+                                            predictions =
+                                                await WeatherServices()
+                                                    .getAutoComplete(value);
+                                          } else {
+                                            predictions.clear();
+                                          }
+                                          setState(() {});
                                         },
                                       ),
                                     ),
@@ -191,38 +189,37 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-        
-          if(predictions.isNotEmpty && queryController.text.isNotEmpty)
-          MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            removeBottom: true,
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: predictions.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => 
-                        PlaceView(prediction: predictions[index]),
-                      ),
+
+            if (predictions.isNotEmpty && queryController.text.isNotEmpty)
+              MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                removeBottom: true,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: predictions.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PlaceView(prediction: predictions[index]),
+                          ),
+                        );
+                        setState(() {
+                          queryController.clear();
+                        });
+                      },
+                      title: Text(predictions[index].name),
+                      subtitle: Text(predictions[index].country),
                     );
-                    setState(() {
-                      queryController.clear();
-                      
-                    });
                   },
-                  title: Text(predictions[index].name),
-                  subtitle: Text(predictions[index].country),
-                );
-              },
-            ),
-          ),
-        
+                ),
+              ),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -230,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 8.0),
-        
+
                     child: Text(
                       'Hourly Weather Forecast',
                       style: GoogleFonts.poppins(

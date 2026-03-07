@@ -8,14 +8,14 @@ import 'package:weather_app/models/prediction_model.dart';
 class WeatherServices {
   String apiKey = '1f46f3c0acbf46c2bb2150301262502';
 
-  Future<CurrentWeather?> getCurrentWeather(String query) async {
+  Future<WeatherStatus?> getCurrentWeather(String query) async {
     final endpoint =
         'http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$query';
 
     final response = await http.get(Uri.parse(endpoint));
     if (response.statusCode == 200) {
       Map<String, dynamic> body = jsonDecode(response.body);
-      CurrentWeather currentWeather = CurrentWeather.fromJson(body);
+      WeatherStatus currentWeather = WeatherStatus.fromJson(body);
       //Logger().e(currentWeather.name );
       return currentWeather;
     } else {
@@ -34,10 +34,9 @@ class WeatherServices {
       List<PredictionModel> predictions = result
           .map((data) => PredictionModel.fromJson(data))
           .toList();
-          return predictions;
-      
+      return predictions;
     } else {
-      Logger().e(response.statusCode );
+      Logger().e(response.statusCode);
       return [];
     }
   }
