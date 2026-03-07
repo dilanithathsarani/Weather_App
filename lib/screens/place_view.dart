@@ -12,7 +12,7 @@ class PlaceView extends StatefulWidget {
 }
 
 class _PlaceViewState extends State<PlaceView> {
-  late Future<WeatherStatus?> getCurrentWeather;
+  late Future<CurrentWeather?> getCurrentWeather;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _PlaceViewState extends State<PlaceView> {
                   );
                 }
 
-                WeatherStatus? currentWeather = snapshot.data!;
+                CurrentWeather? currentWeather = snapshot.data!;
                 return SizedBox(
                   height: 200,
 

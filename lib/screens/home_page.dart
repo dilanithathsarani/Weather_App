@@ -7,7 +7,7 @@ import 'package:weather_app/screens/place_view.dart';
 import 'package:weather_app/services/weather_services.dart';
 
 class HomePage extends StatefulWidget {
-  final WeatherStatus currentWeather;
+  final CurrentWeather currentWeather;
   const HomePage({super.key, required this.currentWeather});
 
   @override

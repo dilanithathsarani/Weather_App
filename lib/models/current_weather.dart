@@ -1,16 +1,16 @@
-class WeatherStatus {
+class CurrentWeather {
   String name;
   double temp;
   Condition condition;
 
-  WeatherStatus({
+  CurrentWeather({
     required this.name,
     required this.temp,
     required this.condition,
   });
 
-  factory WeatherStatus.fromJson(Map<String, dynamic> json) {
-    return WeatherStatus(
+  factory CurrentWeather.fromJson(Map<String, dynamic> json) {
+    return CurrentWeather(
       name: json['location']['name'],
       temp: json['current']['temp_c'],
       condition: Condition.fromJson(json['current']['condition']),
@@ -25,6 +25,9 @@ class Condition {
   Condition({required this.text, required this.icon});
 
   factory Condition.fromJson(Map<String, dynamic> json) {
-    return Condition(text: json['text'], icon: 'https:${json['icon']}');
+    return Condition(
+      text: json['text'],
+      icon: 'https:${json['icon']}',
+    );
   }
 }
